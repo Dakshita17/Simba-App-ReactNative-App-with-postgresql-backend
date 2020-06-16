@@ -50,8 +50,8 @@ export default class Login extends React.Component {
             onChangeText={this.handlePasswordChange}
           />
         </View>
-        <Button title='Login' onPress={this.onLogin} />
-        <Button title='Go to Signup' onPress={this.goToSignup} />
+        <Button color="#00bfff" title='Login' onPress={this.onLogin} />
+        <Button color="#00bfff" title='Go to Signup' onPress={this.goToSignup} />
       </View>
     )
   }
@@ -60,7 +60,7 @@ export default class Login extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center'
   }
