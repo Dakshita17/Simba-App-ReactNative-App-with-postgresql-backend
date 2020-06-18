@@ -1,18 +1,25 @@
 import React from 'react'
 import { useState } from "react";
-import { StyleSheet,Picker, View, Button, TextInput ,Platform,Alert} from 'react-native'
-
-
+import { StyleSheet,Picker, View,Platform,Alert} from 'react-native'
+import Background from '../components/Background';
+import Logo from '../components/Logo';
+import Header from '../components/Header';
+import Button from '../components/Button';
+import TextInput from '../components/TextInput';
+import BackButton from '../components/BackButton';
+import { theme } from '../core/theme';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 export default class Details1 extends React.Component {
-  state = {
-    fname: '',
-    lname: ''
-  }
+  
    constructor(props) {
     super(props);
     this.state = {
-      PickerSelectedVal : ''
+      PickerSelectedVal : '',
+      fname: '',
+    lname: '',
+    pin:'',
+    country: 'Choose Country'
     };
   }
   getSelectedPickerValue=()=>{
@@ -28,8 +35,11 @@ export default class Details1 extends React.Component {
     this.setState({ password })
   }
 
+    handlePinChange = pin => {
+    this.setState({ pin })
+  }
   onLogin = async () => {
-    const { fname, lname } = this.state
+    const { fname, lname,pin,PickerSelectedVal} = this.state
     try {
       if (fname.length > 0 && lname.length > 0) {
         this.props.navigation.navigate('App')
@@ -39,52 +49,92 @@ export default class Details1 extends React.Component {
     }
   }
   
-  goToNext = () => this.props.navigation.navigate('Language')
+  goToNext = () => this.props.navigation.navigate('Floatlabel')
   render() {
     const { lname, fname } = this.state
     
     return (
-      <View style={styles.container}>
-        <View style={{ margin: 10 }}>
-          <TextInput
-            name='fname'
-            value={fname}
-            placeholder='Enter First Name'
-            autoCapitalize='none'
-            onChangeText={this.handleFnameChange}
-          />
-        </View>
-        <View style={{ margin: 10 }}>
-          <TextInput
-            name='lname'
-            value={lname}
-            placeholder='Enter Last Name'
-            secureTextEntry
-            onChangeText={this.handleLnameChange}
-          />
-        </View>
-        <View style={styles1.container}>
-        <View style={{ margin: 10 }}>
-      <Picker
-           selectedValue={this.state.PickerSelectedVal}
-           onValueChange={(itemValue, itemIndex) => this.setState({PickerSelectedVal: itemValue})} >
+     <Background>
+      <BackButton goBack={() => navigation.navigate('Details2')} />
+      
+      <Header>Register</Header>
+      
+      
+      <TextInput
+        label="First Name"
+        returnKeyType="next"
+        value={fname.value}
+        onChangeText={this.handleFnameChange}
+        autoCapitalize="none"
+        
+      />
+      <TextInput
+        label="Last Name"
+        returnKeyType="next"
+        value={lname.value}
+        onChangeText={this.handleLnameChange}
+        autoCapitalize="none"
+        
+      />
 
-           <Picker.Item label="India" value="India" />
-           <Picker.Item label="USA" value="USA" />
-           <Picker.Item label="China" value="China" />
-           <Picker.Item label="Russia" value="Russia" />
-           <Picker.Item label="United Kingdom" value="United Kingdom" />
-           <Picker.Item label="France" value="France" />
+        <DropDownPicker
+    items={[
+        {label: 'Choose your Country', value: 'Choose Country'},
+        {label: 'UK', value: 'uk'},
+        {label: 'France', value: 'france'},
+    ]}
+    defaultValue={this.state.country}
+    
+    containerStyle={{width: 260, height: 60}}
+    style={{backgroundColor: '#ffffff'}}
+    dropDownStyle={{backgroundColor: '#fafafa'}}
+    onChangeItem={item => this.setState({
+        country: item.value
+    })}
+/>
+     
+        
 
-         </Picker>
-         </View>
-      </View>
+         
+         <TextInput
+        label="PinCode"
+        returnKeyType="next"
+        value={lname.value}
+        onChangeText={this.handleLnameChange}
+        autoCapitalize="none"
+        
+      />
+         
+      
          
         <Button color="#00bfff" title='Go to Next' onPress={this.goToNext} />
-      </View>
+      
+      
+    </Background>
     )
   }
 }
+const stylespicker = StyleSheet.create ({  
+     container: {  
+         flex: 0.5,  
+         alignItems: 'center',  
+         justifyContent: 'center', 
+          height: 350,  
+        width: "match-parent",
+     },  
+    textStyle:{  
+        margin: 24,  
+        fontSize: 25,  
+        fontWeight: 'bold',  
+        textAlign: 'center',  
+    },  
+    pickerStyle:{  
+        height: 350,  
+        width: "match-parent",  
+        color: '#344953',  
+        justifyContent: 'center',  
+    }  
+});
 
 const styles1 = StyleSheet.create({
   container: {

@@ -1,6 +1,12 @@
 import React, { Component } from "react";
-import { Platform, StyleSheet, View, Button, Picker, Alert } from "react-native";
-
+import { Platform, StyleSheet, View, Picker, Alert } from "react-native";
+import Background from '../components/Background';
+import Logo from '../components/Logo';
+import Header from '../components/Header';
+import Button from '../components/Button';
+import TextInput from '../components/TextInput';
+import BackButton from '../components/BackButton';
+import { theme } from '../core/theme';
 export default class HomeActivity extends Component {
 
   constructor(){
@@ -17,7 +23,13 @@ export default class HomeActivity extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
+    <Background>
+      <BackButton goBack={() => navigation.navigate('Home')} />
+
+      
+
+      <Header>Choose your Language</Header>
+      
       <Picker
            selectedValue={this.state.PickerSelectedVal}
            onValueChange={(itemValue, itemIndex) => this.setState({PickerSelectedVal: itemValue})} >
@@ -33,7 +45,10 @@ export default class HomeActivity extends Component {
          </Picker>
 
         
-      </View>
+      
+      
+    </Background>
+  
     );
   }
   
@@ -46,3 +61,4 @@ const styles = StyleSheet.create({
     margin :30
   },
 });
+
