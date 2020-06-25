@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState ,useEffect } from 'react';
 import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
@@ -12,7 +12,9 @@ import { emailValidator, passwordValidator } from '../core/utils';
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
-
+    const [data1, setData1] = useState('');
+    const [data2,setData2]=useState('');
+    const [isLoading, setIsLoading] = useState(false);
   const _onLoginPressed = () => {
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
@@ -22,43 +24,50 @@ const LoginScreen = ({ navigation }) => {
       setPassword({ ...password, error: passwordError });
       return;
     }
-  /*  else
-    {
-    fetch('http/192.245333/3000/users',{
-    method:'POST',
-    headers:
-    {
-        'Accept' :'application/json',
-        'Content-Type':'application/json',
-    },
-    body:JSON.stringify(
-    {
-        email:this.state.email,
-        password:this.state.password,
-    })
-    
-    })
-    .then((response)=>response.json())
-    .then((res)=>{
-    if(res.success===true)
-    {
-        AyncStorage.setItem('user',res.user);
-        this.props.navigation.navigate('Profile');
-    
-    }
-    else
-    {
-    
-    alert(res.message);
-    }
-    
-    }).done();
-    
-    }
-    */
+    else{
+    setIsLoading(true);
+     fetch(
+     
+      `http://localhost:3000/users/1`,
+      {
+        method: "GET",
+        dataType: 'json',
+        
+        
+      }
+    )
+      .then(res => res.json())
+      .then(response => {
+      
+      console.log(response[0].name);
+      if((response[0].name==password.value)&&(response[0].email==email.value))
+      {
+      console.log('matched');
+        navigation.navigate('Home');
+      }
+      else
+      {
+      
+      console.log(password.value);
+      console.log('unmatched');
+        alert(response.message);
+      }
 
+     
+        
+      })
+      .catch(error => console.log(error));
+      
+   }
    
-  };
+      
+      
+ };
+ 
+ 
+ 
+  
+  
 
   return (
     <Background>

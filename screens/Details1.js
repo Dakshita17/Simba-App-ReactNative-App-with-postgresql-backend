@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from "react";
-import { StyleSheet,Picker, View,Platform,Alert} from 'react-native'
+import { TouchableOpacity,StyleSheet,Picker, View,Platform,Alert} from 'react-native'
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -18,13 +18,12 @@ export default class Details1 extends React.Component {
       PickerSelectedVal : '',
       fname: '',
     lname: '',
-    pin:'',
+    pin:'Choose pincode',
     country: 'Choose Country'
+    
     };
   }
-  getSelectedPickerValue=()=>{
-      Alert.alert("Selected Language is : " +this.state.PickerSelectedVal);
-    }
+  
 
   
   handleFnameChange = fname => {
@@ -49,13 +48,13 @@ export default class Details1 extends React.Component {
     }
   }
   
-  goToNext = () => this.props.navigation.navigate('Floatlabel')
+  
   render() {
     const { lname, fname } = this.state
     
     return (
      <Background>
-      <BackButton goBack={() => navigation.navigate('Details2')} />
+      <BackButton goBack={() => navigation.navigate('PhoneAuth')} />
       
       <Header>Register</Header>
       
@@ -93,7 +92,9 @@ export default class Details1 extends React.Component {
     })}
 />
      
-        
+       
+     
+      
 
          
          <TextInput
@@ -106,8 +107,10 @@ export default class Details1 extends React.Component {
       />
          
       
-         
-        <Button color="#00bfff" title='Go to Next' onPress={this.goToNext} />
+         <Button mode="contained" onPress={() => this.props.navigation.navigate('PhoneAuth')}>
+        Next
+      </Button>
+        
       
       
     </Background>

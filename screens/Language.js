@@ -7,12 +7,14 @@ import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
+import DropDownPicker from 'react-native-dropdown-picker';
 export default class HomeActivity extends Component {
 
   constructor(){
      super();
      this.state={
-       PickerSelectedVal : ''
+       Language : 'Choose Language'
+       
      }
    }
 
@@ -30,19 +32,31 @@ export default class HomeActivity extends Component {
 
       <Header>Choose your Language</Header>
       
-      <Picker
-           selectedValue={this.state.PickerSelectedVal}
-           onValueChange={(itemValue, itemIndex) => this.setState({PickerSelectedVal: itemValue})} >
-
-           <Picker.Item label="----Choose your Language----"/>
-           <Picker.Item label="Hindi" value="Hindi" />
-           <Picker.Item label="English" value="English" />
-           <Picker.Item label="Tamil" value="Tamil" />
-           <Picker.Item label="Telugu" value="Telugu" />
-           <Picker.Item label="Punjabi" value="Punjabi" />
-           <Picker.Item label="Kannada" value="Kannada" />
-
-         </Picker>
+      
+      <DropDownPicker
+    items={[
+        {label: 'Choose your Language', value: 'Choose Language'},
+        {label: 'UK', value: 'uk'},
+        {label: 'France', value: 'france'},
+         {label:"Hindi" ,value:"Hindi"},
+           {label:"English", value:"English"},
+           {label:"Tamil" ,value:"Tamil"},
+           {label:"Telugu" ,value:"Telugu"},
+           {label:"Punjabi", value:"Punjabi"},
+           {label:"Kannada", value:"Kannada"},
+    ]}
+    defaultValue={this.state.country}
+    
+    containerStyle={{width: 260, height: 60}}
+    style={{backgroundColor: '#ffffff'}}
+    dropDownStyle={{backgroundColor: '#fafafa'}}
+    onChangeItem={item => this.setState({
+        country: item.value
+    })}
+/>
+     
+      
+      
 
         
       
